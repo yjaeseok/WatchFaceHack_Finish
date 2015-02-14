@@ -22,6 +22,9 @@
     <uses-permission android:name="com.google.android.permission.PROVIDE_BACKGROUND" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+    <!-- Calendar 데이터를 읽기위한 Calendar permission -->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -47,15 +50,29 @@
 
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
-
                 <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
             </intent-filter>
         </service>
 
-        <!--
-             단, 한개의 웨어러블 앱은 여러개의 Watch Face를 소유할 수 있다.
-             따라서 여러 Watch Face를 가진 웨어러블 앱을 만드려면 여러개의 Service를 생성하면 된다.
-        -->
+        <service
+            android:name=".CalendarWatchFaceService"
+            android:label="@string/calendar_name"
+            android:permission="android.permission.BIND_WALLPAPER" >
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/watch_face" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.preview"
+                android:resource="@drawable/preview_calendar" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.preview_circular"
+                android:resource="@drawable/preview_calendar_circular" />
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+                <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
